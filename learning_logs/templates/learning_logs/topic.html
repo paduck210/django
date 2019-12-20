@@ -1,0 +1,31 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+
+    <p>Topic : {{ topic|upper }}</p>
+
+    <p>Entries</p>
+    <ul>
+        {% for entry in entries %}
+            <li>
+                <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+                <p>{{ entry.text|linebreaks }}</p>
+            </li>
+        {% empty %}
+            <li>There is no entries so far</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'learning_logs:topics' %} ">Back </a>
+
+    <ul>
+        {% if next_topic == None %}
+            <li><a href="{% url 'learning_logs:topic' previous_topic.id %} ">Previous </a></li>
+        {% elif previous_topic == None %}
+            <li><a href="{% url 'learning_logs:topic' next_topic.id %} ">Next </a></li>
+        {% else %}
+            <li><a href="{% url 'learning_logs:topic' previous_topic.id %} ">Previous </a></li>
+            <li><a href="{% url 'learning_logs:topic' next_topic.id %} ">Next </a></li>
+        {% endif %}
+    </ul>
+
+{% endblock content %}
